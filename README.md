@@ -48,7 +48,7 @@ A simple method allowing you to connect to a database. Under the hood, this
 simply makes a call to `reconnect()`, which is one and the same. The default
 constructor initially makes a call to `connect()`.
 
-#### `query($sql, $fetch_mode = PDO::PDO::FETCH_ASSOC)` ####
+#### `query($sql, $fetch_mode = PDO::FETCH_ASSOC)` ####
 Standard PDO method for querying. Assumes the user has escaped
 everything themselves via `quote()`, otherwise entirely insecure.
 You should instead by using a prepared statement method listed above.
@@ -58,7 +58,7 @@ by setting `$fetch_mode = PDO::FETCH_OBJ`.
 
 
 
-#### `fetchRow($sql, $data = NULL, $fetch_mode = PDO::PDO::FETCH_ASSOC)` ####
+#### `fetchRow($sql, $data = NULL, $fetch_mode = PDO::FETCH_ASSOC)` ####
 For fetching multiple rows. SimpleSql won't inherently return an array
 as that would entail a huge performance hit. You will be returned
 
@@ -72,7 +72,7 @@ if (!empty($row)) {
 
 ```
 
-#### `fetchRows($sql, $data = NULL, $fetch_mode = PDO::PDO::FETCH_ASSOC)` ####
+#### `fetchRows($sql, $data = NULL, $fetch_mode = PDO::FETCH_ASSOC)` ####
 For fetching multiple rows. SimpleSql won't inherently return an array
 as that would entail a huge performance hit for large datasets. You are
 returned the `PDOStatement` object or `FALSE` on failure. To iterate over
