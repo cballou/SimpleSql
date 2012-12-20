@@ -71,6 +71,7 @@ pairs mapping to column name => column value.
 // simple row fetch without any parameter bindings
 $row = $db->fetchRow('SELECT * FROM users WHERE id = 1');
 if (!empty($row)) {
+    // depending on your $fetch_mode, you may have an associative array, numerically indexed array, object, or both
     var_dump($row);
 }
 ```
@@ -94,7 +95,7 @@ foreach ($stmt as $row) {
 ```php
 <?php
 // using while, not preferred as it's slower than foreach
-$stmt = $db->fetchRows('SELECT * FROM users WHERE id = 1');
+$stmt = $db->fetchRows('SELECT * FROM users ORDER BY firstname ASC');
 while ($row = $stmt->fetch()) {
     // depending on your $fetch_mode, you may have an associative array, numerically indexed array, object, or both
     echo print_r($row, true);
