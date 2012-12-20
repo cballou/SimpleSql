@@ -5,7 +5,7 @@ the atrocities of querying by using common methods while still giving you full c
 ## Querying and Prepared Statements ##
 One of the primary benefits of using PDO is you get out of box support of prepared statements. This really boils down
 to speed and security (prevention of SQL injection). Other than the `query()` method, all other methods utilize
-prepared statements. These methods include: `fetch_row()`, `fetch_rows()`, `insert()`, `update()`, `delete()`.
+prepared statements. These methods include: `fetchRow()`, `fetchRows()`, `insert()`, `update()`, and `delete()`.
 
 Below you will find two examples of how you use prepared statements:
 
