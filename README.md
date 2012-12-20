@@ -33,17 +33,6 @@ $sql = 'INSERT INTO user SET firstname = ?, lastname = ?';
 ```
 
 
-## Usage ##
-
-#### Select ####
-
-#### Insert ####
-
-#### Update ####
-
-#### Delete ####
-
-
 ## Public Methods ##
 
 #### `__construct($host, $username, $password, $database)` ####
@@ -54,18 +43,36 @@ The default constructor for instantiation, i.e.
 $ss = new SimpleSql('localhost', 'root', 'pass', 'myDb');
 ```
 
-#### `query($sql, $fetch_mode = PDO::FETCH_OBJ)` ####
+#### `connect($host, $username, $password, $database, $driver = 'mysql')` ####
+A simple method allowing you to connect to a database. Under the hood, this
+simply makes a call to `reconnect()`, which is one and the same. The default
+constructor initially makes a call to `connect()`.
+
+#### `query($sql, $fetch_mode = PDO::PDO::FETCH_ASSOC)` ####
 Standard PDO method for querying. Assumes the user has escaped
 everything themselves via `quote()`, otherwise entirely insecure.
 You should instead by using a prepared statement method listed above.
 This method is not recommended but provided for convenience to
-knowledgeable individuals.
+knowledgeable individuals. You can override the fetch mode to return an object
+by setting `$fetch_mode = PDO::FETCH_OBJ`.
 
-#### `fetch_row($sql, $data, $fetch_mode = PDO::FETCH_OBJ)` ####
+
+
+#### `fetchRow($sql, $data = NULL, $fetch_mode = PDO::PDO::FETCH_ASSOC)` ####
 For fetching multiple rows. SimpleSql won't inherently return an array
 as that would entail a huge performance hit. You will be returned
 
-#### `fetch_rows($sql, $data, $fetch_mode = PDO::FETCH_OBJ)` ####
+```php
+<?php
+// simple row fetch without any parameter bindings
+$row = $db->fetchRow('SELECT * FROM users WHERE id = 1');
+if (!empty($row)) {
+    var_dump($row);
+}
+
+```
+
+#### `fetchRows($sql, $data = NULL, $fetch_mode = PDO::PDO::FETCH_ASSOC)` ####
 For fetching multiple rows. SimpleSql won't inherently return an array
 as that would entail a huge performance hit for large datasets. You are
 returned the `PDOStatement` object or `FALSE` on failure. To iterate over
@@ -74,20 +81,20 @@ the result set, you may do one of the following:
 ```php
 <?php
 // the preferred method is to use foreach, as the PDOStatement class implements the Traversible interface
-$stmt = $db->fetch_rows('SELECT * FROM users');
+$stmt = $db->fetchRows('SELECT * FROM users');
 foreach ($stmt as $row) {
     // depending on your $fetch_mode, you may have an associative array, numerically indexed array, object, or both
-    print_r($row, true);
+    echo print_r($row, true);
 }
 ```
 
 ```php
 <?php
 // using while, not preferred as it's slower than foreach
-$stmt = $db->fetch_row('SELECT * FROM users WHERE id = 1');
+$stmt = $db->fetchRows('SELECT * FROM users WHERE id = 1');
 while ($row = $stmt->fetch()) {
     // depending on your $fetch_mode, you may have an associative array, numerically indexed array, object, or both
-    print_r($row, true);
+    echo print_r($row, true);
 }
 ```
 
