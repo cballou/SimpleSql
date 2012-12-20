@@ -10,7 +10,7 @@ prepared statements. These methods include: `fetchRow()`, `fetchRows()`, `insert
 Below you will find two examples of how you use prepared statements:
 
 #### Named Bindings ####
-This method is ideal because it is easily changeable if something changes in your code. You specify bound parameters
+This method of generating your queries is ideal because it is easily changeable if something changes in your code. You specify bound parameters
 to be replaced using the `:parameter` syntax in your SQL string. Your data array must be an associative array of
 key/val pairs where the keys match your named parameters in the SQL.
 
@@ -21,7 +21,7 @@ $sql = 'INSERT INTO user SET firstname = :firstname, lastname = :lastname';
 ```
 
 #### Placeholder Bindings ####
-This method is not preferred but very easy to understand. It assumes that your SQL contains a question mark, `?`,
+This method of generating your queries is not preferred but very easy to understand. It assumes that your SQL contains a question mark, `?`,
 wherever you expect a variable. This essentially handles the same as `vsprintf("%s %s")`, where there is a correlation
 in the order of your placeholders, `?`, to the order of the variables in your passed in `$data` array. Things
 must be in order.
@@ -59,8 +59,12 @@ by setting `$fetch_mode = PDO::FETCH_OBJ`.
 
 
 #### `fetchRow($sql, $data = NULL, $fetch_mode = PDO::FETCH_ASSOC)` ####
-For fetching multiple rows. SimpleSql won't inherently return an array
-as that would entail a huge performance hit. You will be returned
+For fetching a single row. This implies that you are generally querying for a single
+row by primary key or expecting to return only the first row from a list of results,
+as may be the case if you're looking for `MIN`, `MAX`, or something specific
+to `ORDER BY`. By default, you'll be returned an array containing `key => val`
+pairs mapping to column name => column value.
+
 
 ```php
 <?php
@@ -69,7 +73,6 @@ $row = $db->fetchRow('SELECT * FROM users WHERE id = 1');
 if (!empty($row)) {
     var_dump($row);
 }
-
 ```
 
 #### `fetchRows($sql, $data = NULL, $fetch_mode = PDO::FETCH_ASSOC)` ####
