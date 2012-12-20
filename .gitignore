@@ -1,0 +1,6 @@
+phpunit.xml
+coverage
+/vendor/.composer/
+vendor
+composer.phar
+composer.lock
