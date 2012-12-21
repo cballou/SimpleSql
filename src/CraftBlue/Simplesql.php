@@ -1,6 +1,8 @@
 <?php
 namespace CraftBlue;
 
+use PDO;
+
 /**
  * A robust yet simple PHP PDO class for dealing with PDO database connections.
  * Takes care of many of the intricacies and quirks associated with PDO so
