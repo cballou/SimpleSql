@@ -1,5 +1,5 @@
 {
-    "name": "craftblue/simple-sql",
+    "name": "craftblue/simplesql",
     "type": "library",
     "description": "SimpleSql is a wrapper around PHP's PDO and is intended to be an easy to use drop-in for your projects. It abstracts away the atrocities of querying by using common methods while still giving you full control of your queries",
     "keywords": ["craftblue", "cballou", "pdo", "mysql", "sql", "database"],
