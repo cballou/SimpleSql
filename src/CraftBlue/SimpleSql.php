@@ -1,6 +1,8 @@
 <?php
 namespace CraftBlue;
 
+use PDO;
+
 /**
  * A robust yet simple PHP PDO class for dealing with PDO database connections.
  * Takes care of many of the intricacies and quirks associated with PDO so
@@ -30,10 +32,10 @@ class SimpleSql {
      * @var array
      */
     protected $_fetchConstants = array(
-        PDO::FETCH_ASSOC => 1,
-        PDO::FETCH_BOTH => 1,
-        PDO::FETCH_NUM => 1,
-        PDO::FETCH_OBJ => 1
+        \PDO::FETCH_ASSOC => 1,
+        \PDO::FETCH_BOTH => 1,
+        \PDO::FETCH_NUM => 1,
+        \PDO::FETCH_OBJ => 1
     );
 
     /**
@@ -121,7 +123,7 @@ class SimpleSql {
         // generate driver specific options
         $opts = NULL;
         if (strtolower($this->driver) == 'mysql') {
-            $opts = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
+            $opts = array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
         }
 
         // let any exceptions bubble, not our problem
@@ -133,7 +135,7 @@ class SimpleSql {
         );
 
         // trigger exceptions
-        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     /**
@@ -164,7 +166,7 @@ class SimpleSql {
      * @param   int     $fetch_mode
      * @return  PDOStatement|false
      */
-    public function query($sql, $fetch_mode = PDO::FETCH_ASSOC)
+    public function query($sql, $fetch_mode = \PDO::FETCH_ASSOC)
     {
         $this->closeCursor();
 
@@ -243,7 +245,7 @@ class SimpleSql {
      * @param   array   $data
      * @param   int     $fetch_mode
      */
-    public function fetchRow($sql, $data = NULL, $fetch_mode = PDO::FETCH_ASSOC)
+    public function fetchRow($sql, $data = NULL, $fetch_mode = \PDO::FETCH_ASSOC)
     {
         $this->closeCursor();
 
@@ -296,7 +298,7 @@ class SimpleSql {
      * @param   array   $data
      * @param   int     $fetch_mode
      */
-    public function fetchRows($sql, $data = NULL, $fetch_mode = PDO::FETCH_ASSOC)
+    public function fetchRows($sql, $data = NULL, $fetch_mode = \PDO::FETCH_ASSOC)
     {
         $this->closeCursor();
         $this->sql = $sql;
@@ -564,7 +566,7 @@ class SimpleSql {
      * @param   string  $string
      * @param   int     $parameter_type
      */
-    public function quote($string, $parameter_type = PDO::PARAM_STR)
+    public function quote($string, $parameter_type = \PDO::PARAM_STR)
     {
         return $this->pdo->quote($string, $parameter_type);
     }
@@ -720,7 +722,7 @@ class SimpleSql {
             $fetch_mode;
         }
 
-        return PDO::FETCH_ASSOC;
+        return \PDO::FETCH_ASSOC;
     }
 
     /**
