@@ -1,4 +1,6 @@
 <?php
+namespace CraftBlue;
+
 /**
  * A robust yet simple PHP PDO class for dealing with PDO database connections.
  * Takes care of many of the intricacies and quirks associated with PDO so
@@ -123,7 +125,7 @@ class SimpleSql {
         }
 
         // let any exceptions bubble, not our problem
-        $this->pdo = new PDO(
+        $this->pdo = new \PDO(
             $connStr,
             $this->username,
             $this->password,
