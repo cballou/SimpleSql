@@ -151,3 +151,7 @@ A wrapper for `endTransaction()`, just to be nice.
 To force close the PDO connection. Generally you will not need to do this as
 it's automatically done once the script ends. For more information, read
 [PHP: PDO Connections & Connection Management](http://us.php.net/manual/en/pdo.connections.php)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/cballou/simplesql/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
