@@ -251,13 +251,7 @@ class SimpleSql {
 
         $this->sql = $sql;
 
-        if ($data !== null) {
-            if (is_array($data)) {
-                $data = array_values($data);
-            } else {
-                $data = (array) $data;
-            }
-        }
+        $data = $this->_fixData($data);
 
         // track attempts
         $attempts = 0;
