@@ -422,9 +422,6 @@ class SimpleSql {
                 throw new Exception('Update requires $data and $where to be associative.');
             }
 
-            // merge data for prepared statement
-            $data = array_merge($data, $where);
-
             // generate where SQL
             $whereClause = array();
             foreach ($where as $key => $val) {
@@ -435,6 +432,9 @@ class SimpleSql {
                 }
             }
             $sql .= implode(' AND ', $whereClause);
+            
+            // merge data for prepared statement
+            $data = array_merge($data, $where);
         }
 
         $this->sql = $sql;
