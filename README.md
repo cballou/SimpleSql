@@ -2,6 +2,12 @@
 SimpleSql is a wrapper around PHP's PDO and is intended to be an easy to use drop-in for your projects. It abstracts away
 the atrocities of querying by using common methods while still giving you full control of your queries.
 
+A number of the atrocities SimpleSql handles are:
+
+* Automatically retries failed queries up to 3 times
+* Automatic reconnection attempt on the MySQL `2006, mysql server has gone away` error
+* Fixing potential issues with `PDO::MYSQL_ATTR_USE_BUFFERED_QUERY` by automatically closing cursors before new calls are made
+
 ## Querying and Prepared Statements ##
 One of the primary benefits of using PDO is you get out of box support of prepared statements. This really boils down
 to speed and security (prevention of SQL injection). Other than the `query()` method, all other methods utilize
@@ -56,8 +62,6 @@ This method is not recommended but provided for convenience to
 knowledgeable individuals. You can override the fetch mode to return an object
 by setting `$fetch_mode = PDO::FETCH_OBJ`.
 
-
-
 #### `fetchRow($sql, $data = NULL, $fetch_mode = PDO::FETCH_ASSOC)` ####
 For fetching a single row. This implies that you are generally querying for a single
 row by primary key or expecting to return only the first row from a list of results,
@@ -108,15 +112,17 @@ for you. It's useful for simple inserts. It does no verification that the data
 matches table columns. The benefit of `insert()` is that it will return the
 `lastInsertId` value for you on success and `FALSE` on failure.
 
-#### `update($table, $where, $data)` ####
+#### `update($table, $data, $where = array())` ####
 This is really a glorified wrapper around `execute()` where we create the
 sql for you. It's only useful in simple update cases as you can't do anything
-crazy. If you need to get crazy, use `execute()`.
+crazy. If you need to get crazy, use `execute()`. The `$where` param takes
+a key/val array which generates SQL `AND` clauses.
 
-#### `delete($table, $where)` ####
+#### `delete($table, $where = array())` ####
 This is really a glorified wrapper around `execute()` where we create the
 sql for you. If you need to get crazy, use `execute()`. We leave it up to you
-in terms of how to handle the return via `count()`.
+in terms of how to handle the return via `count()`. The `$where` param takes
+a key/val array which generates SQL `AND` clauses.
 
 #### `count()` ####
 Returns the number of rows affected by the last DELETE, INSERT, or UPDATE.
@@ -151,7 +157,3 @@ A wrapper for `endTransaction()`, just to be nice.
 To force close the PDO connection. Generally you will not need to do this as
 it's automatically done once the script ends. For more information, read
 [PHP: PDO Connections & Connection Management](http://us.php.net/manual/en/pdo.connections.php)
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/cballou/simplesql/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
